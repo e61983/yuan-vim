@@ -2,18 +2,18 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/vundle
+set rtp+=~/.vim/bundle/Vundle.vim
 set shell=/bin/bash
 
 " http://www.erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/
 " Setting up Vundle - the vim plugin bundler
 let iCanHazVundle=1
-let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+let vundle_readme=expand('~/.vim/bundle/Vundle.vim/README.md')
 if !filereadable(vundle_readme)
   echo "Installing Vundle.."
   echo ""
   silent !mkdir -p ~/.vim/bundle
-  silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+  silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/Vundle.vim
   let iCanHazVundle=0
 endif
 
@@ -143,6 +143,5 @@ filetype plugin indent on    " required
     let g:clang_close_preview=1
     let g:clang_user_options = '-std=c99'
   " }
-
 
 "}
