@@ -26,6 +26,7 @@ Plugin 'vim-scripts/taglist.vim'
 Plugin 'vim-scripts/utl.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
 " Snippets {
   Plugin 'MarcWeber/vim-addon-mw-utils'
   Plugin 'tomtom/tlib_vim'
@@ -50,7 +51,7 @@ filetype plugin indent on    " required
 " }
 
 " General Setting
-
+  let mapleader = ","
   set history=1000
   set ruler
   set autoread
