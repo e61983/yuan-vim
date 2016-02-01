@@ -36,6 +36,8 @@ Plugin 'scrooloose/nerdcommenter'
 " }
 Plugin 'Rip-Rip/clang_complete'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'vim-scripts/gtags.vim'
+Plugin 'Yggdroot/indentLine'
 
 
 " All of your Plugins must be added before the following line
@@ -45,6 +47,7 @@ filetype plugin indent on    " required
 " Clolor Scheme {
   set title
   set number
+  set cursorline
   syntax enable
   colorscheme delek            "color schoe 
   let g:solarized_termcolors=256
@@ -129,7 +132,7 @@ filetype plugin indent on    " required
     set statusline+=%{SyntasticStatuslineFlag()}
     set statusline+=%*
     let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_auto_loc_list = 0
     let g:syntastic_check_on_open = 1
     let g:syntastic_check_on_wq = 0  
   " }
@@ -145,4 +148,77 @@ filetype plugin indent on    " required
     let g:clang_user_options = '-std=c99'
   " }
 
+  " cscope Setting {
+    set cscopetag
+    set cscopeprg=gtags-cscope
+    set cscopequickfix=c-,d-,e-,f-,g0,i-,s-,t-
+    nmap <silent> <leader>j <ESC>:cstag <c-r><c-w><CR>
+    nmap <silent> <leader>g <ESC>:lcs f c <c-r><c-w><cr>:lw<cr>
+    nmap <silent> <leader>s <ESC>:lcs f s <c-r><c-w><cr>:lw<cr>
+    command! -nargs=+ -complete=dir FindFiles :call FindFiles(<f-args>)
+    au VimEnter * call VimEnterCallback()
+    au BufAdd *.[ch] call FindGtags(expand('<afile>'))
+    au BufWritePost *.[ch] call UpdateGtags(expand('<afile>'))
+
+    function! FindFiles(pat, ...)
+      let path = ''
+      for str in a:000
+        let path .= str . ','
+      endfor
+
+      if path == ''
+        let path = &path
+      endif
+
+      echo 'finding...'
+      redraw
+      call append(line('$'), split(globpath(path, a:pat), '\n'))
+      echo 'finding...done!'
+      redraw
+    endfunc
+
+    function! VimEnterCallback()
+      for f in argv()
+        if fnamemodify(f, ':e') != 'c' && fnamemodify(f, ':e') != 'h'
+          continue
+        endif
+
+        call FindGtags(f)
+      endfor
+    endfunc
+
+    function! FindGtags(f)
+      let dir = fnamemodify(a:f, ':p:h')
+      while 1
+        let tmp = dir . '/GTAGS'
+        if filereadable(tmp)
+          exe 'cs add ' . tmp . ' ' . dir
+          break
+        elseif dir == '/'
+          break
+        endif
+
+        let dir = fnamemodify(dir, ":h")
+      endwhile
+    endfunc
+
+    function! UpdateGtags(f)
+      let dir = fnamemodify(a:f, ':p:h')
+      exe 'silent !cd ' . dir . ' && global -u &> /dev/null &'
+    endfunction
+    au VimEnter * call VimEnterCallback()
+    au BufAdd *.[ch] call FindGtags(expand('<afile>'))
+    au BufWritePost *.[ch] call UpdateGtags(expand('<afile>'))
+  " }
+
+  "gtags Setting {
+   let g:Gtags_OpenQuickfixWindow = 0 
+   let g:Gtags_VerticalWindow =  0
+   let g:Gtags_Auto_Update = 1
+   let g:Gtags_Auto_Map=0
+  " }
+
+  " indentLine Setting {
+    let g:indentLine_color_term = 239
+  " }
 "}
