@@ -34,10 +34,11 @@ Plugin 'garbas/vim-snipmate'
 " Optional:
 Plugin 'honza/vim-snippets'
 " }
-Plugin 'Rip-Rip/clang_complete'
+"Plugin 'Rip-Rip/clang_complete'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'vim-scripts/gtags.vim'
 Plugin 'Yggdroot/indentLine'
+Plugin 'yegappan/grep'
 
 
 " All of your Plugins must be added before the following line
@@ -73,7 +74,6 @@ set showmatch          " 顯示對應的括號
 set wildchar=<TAB>
 set wildmenu
 set wildignore=*.o,*.class,*.pyc
-
 
 set incsearch          " 即時搜尋
 set nobackup           " 不要產生備份檔
@@ -117,23 +117,17 @@ endif
 " }
 
 " 自動括號補齊 {
-:inoremap ( ()
-:inoremap " ""
-:inoremap ' ''
-:inoremap { {}
-:inoremap [ []
-:inoremap ) =ClosePair(')')
-:inoremap } =ClosePair('}')
-:inoremap ] =ClosePair(']')
-
-function! ClosePair(char)
-    if getline('.')[col('.') - 1] == a:char
-        return "\<Right>"
-    else
-        return a:char
-    endif
-endf
+:inoremap ( ()<LEFT>
+:inoremap " ""<LEFT>
+:inoremap ' ''<LEFT>
+:inoremap { {}<LEFT>
+:inoremap [ []<LEFT>
 " }
+
+" Tags 設定
+set tags=tags;
+set autochdir
+"} 
 
 " Plugin Setting {
 
@@ -148,7 +142,7 @@ let g:NERDTreeWinPos="right"
 " }
 
 " taglist {
-map <F4> :Tlist<CR>
+map <F4> :TlistToggle<CR>
 " }
 
 " Syntastic Setting {
@@ -164,85 +158,21 @@ let g:syntastic_check_on_wq = 0
 " Snipmate Setting {
 "}
 
-" Clang Setting {
-let g:clang_library_path="/usr/lib/llvm-3.6/lib"
-let g:clang_auto_select=1
-let g:clang_snippets=1
-let g:clang_close_preview=1
-let g:clang_user_options = '-std=c99'
-" }
-
-" cscope Setting {
-set cscopetag
-set cscopeprg=gtags-cscope
-set cscopequickfix=c-,d-,e-,f-,g0,i-,s-,t-
-nmap <silent> <leader>j <ESC>:cstag <c-r><c-w><CR>
-nmap <silent> <leader>g <ESC>:lcs f c <c-r><c-w><cr>:lw<cr>
-nmap <silent> <leader>s <ESC>:lcs f s <c-r><c-w><cr>:lw<cr>
-command! -nargs=+ -complete=dir FindFiles :call FindFiles(<f-args>)
-au VimEnter * call VimEnterCallback()
-au BufAdd *.[ch] call FindGtags(expand('<afile>'))
-au BufWritePost *.[ch] call UpdateGtags(expand('<afile>'))
-
-function! FindFiles(pat, ...)
-    let path = ''
-    for str in a:000
-        let path .= str . ','
-    endfor
-
-    if path == ''
-        let path = &path
-    endif
-
-    echo 'finding...'
-    redraw
-    call append(line('$'), split(globpath(path, a:pat), '\n'))
-    echo 'finding...done!'
-    redraw
-endfunc
-
-function! VimEnterCallback()
-    for f in argv()
-        if fnamemodify(f, ':e') != 'c' && fnamemodify(f, ':e') != 'h'
-            continue
-        endif
-
-        call FindGtags(f)
-    endfor
-endfunc
-
-function! FindGtags(f)
-    let dir = fnamemodify(a:f, ':p:h')
-    while 1
-        let tmp = dir . '/GTAGS'
-        if filereadable(tmp)
-            exe 'cs add ' . tmp . ' ' . dir
-            break
-        elseif dir == '/'
-            break
-        endif
-
-        let dir = fnamemodify(dir, ":h")
-    endwhile
-endfunc
-
-function! UpdateGtags(f)
-    let dir = fnamemodify(a:f, ':p:h')
-    exe 'silent !cd ' . dir . ' && global -u &> /dev/null &'
-endfunction
-au VimEnter * call VimEnterCallback()
-au BufAdd *.[ch] call FindGtags(expand('<afile>'))
-au BufWritePost *.[ch] call UpdateGtags(expand('<afile>'))
-" }
-
-"gtags Setting {
-let g:Gtags_OpenQuickfixWindow = 0 
-let g:Gtags_VerticalWindow =  0
-let g:Gtags_Auto_Update = 1
-let g:Gtags_Auto_Map=0
-" }
-
 " indentLine Setting {
 let g:indentLine_color_term = 239
 " }
+
+" OmniCppComplete
+let OmniCpp_NamespaceSearch = 1
+let OmniCpp_GlobalScopeSearch = 1
+let OmniCpp_ShowAccess = 1
+let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+let OmniCpp_MayCompleteDot = 1 " autocomplete after .
+let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
+let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
+let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+" automatically open and close the popup menu / preview window
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+set completeopt=menuone,menu,longest,preview
+
 "}
