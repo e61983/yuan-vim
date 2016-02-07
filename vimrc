@@ -126,6 +126,7 @@ endif
 " Tags 設定
 set tags=tags;
 set autochdir
+map <C-F12> :!ctags -R --fields=+iaS --extra=+q * <CR>
 "} 
 
 " Plugin Setting {
