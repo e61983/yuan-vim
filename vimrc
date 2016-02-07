@@ -23,6 +23,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'vim-scripts/taglist.vim'
+Plugin 'vim-scripts/OmniCppComplete'
 Plugin 'vim-scripts/utl.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
