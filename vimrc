@@ -34,9 +34,7 @@ Plugin 'garbas/vim-snipmate'
 " Optional:
 Plugin 'honza/vim-snippets'
 " }
-"Plugin 'Rip-Rip/clang_complete'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'vim-scripts/gtags.vim'
 Plugin 'Yggdroot/indentLine'
 Plugin 'yegappan/grep'
 
