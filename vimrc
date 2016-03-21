@@ -98,6 +98,7 @@ set tabstop=4          " Tab 寬度
 set shiftwidth=4       " 縮排字元數
 set softtabstop=4
 au FileType Makefile set noexpandtab
+map <F12> :!astyle --style=kr --indent=spaces=4 --indent-switches --suffix=none % <CR>
 " }
 
 " C/C++ specific settings
