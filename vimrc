@@ -50,7 +50,7 @@ set number             " 顯示行號
 set cursorline         " 所在行高亮度
 set list lcs=tab:\|\   " 以 | 來顯示 Tab
 syntax enable
-colorscheme delek 
+colorscheme desert
 let g:solarized_termcolors=256
 " }
 
