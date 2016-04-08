@@ -101,6 +101,7 @@ au FileType Makefile set noexpandtab
 map <F12> :!astyle --style=kr --indent=spaces=4 --indent-switches --suffix=none % <CR>
 "auto remove tailing space
 autocmd BufWritePre * :%s/\s\+$//e
+set listchars=trail:⎵
 " }
 
 " C/C++ specific settings
