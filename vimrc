@@ -68,7 +68,7 @@ filetype plugin on     " 文件類型外掛支持
 
 set hlsearch           " 搜尋時高亮度顯示
 set backspace=2        " 使 backspace key 正常長處理indent
-set clipboard=unnamed  " 與windows共享剪貼板 
+set clipboard=unnamed  " 與windows共享剪貼板
 set showmatch          " 顯示對應的括號
 set wildchar=<TAB>
 set wildmenu
@@ -110,7 +110,7 @@ autocmd FileType c,cpp,cc  set cindent comments=sr:/*,mb:*,el:*/,:// cino=>s,e0,
 " }
 
 " 編碼設定 {
-set encoding=utf-8                                  
+set encoding=utf-8
 set termencoding=utf-8
 set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,big5,gb2312,latin1
@@ -131,7 +131,7 @@ endif
 set tags=tags;
 set autochdir
 map <C-F12> :!ctags -R --fields=+iaS --extra=+q * <CR>
-"} 
+"}
 
 " Plugin Setting {
 
@@ -156,7 +156,7 @@ set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0  
+let g:syntastic_check_on_wq = 0
 " }
 
 " Snipmate Setting {
