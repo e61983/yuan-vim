@@ -99,6 +99,8 @@ set shiftwidth=4       " 縮排字元數
 set softtabstop=4
 au FileType Makefile set noexpandtab
 map <F12> :!astyle --style=kr --indent=spaces=4 --indent-switches --suffix=none % <CR>
+"auto remove tailing space
+autocmd BufWritePre * :%s/\s\+$//e
 " }
 
 " C/C++ specific settings
