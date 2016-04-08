@@ -178,4 +178,28 @@ let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menuone,menu,longest,preview
 
+" cscope Setting{
+if(executable("cscope") && has("cscope") )
+    set csto=0
+    set cst
+    set nocsverb
+    if filereadable("cscope.out")
+        cs add cscope.out
+    elseif $CSCOPE_DB !=""
+        cs add $CSCOPE_DB
+    endif
+    set csverb
+    "set cscopequickfix=s-,c-,d-,i-,t-,e-
+
+    nmap css :cs find s <C-R>=expand("<cword>")<CR><CR>
+    nmap csg :cs find g <C-R>=expand("<cword>")<CR><CR>
+    nmap csc :cs find c <C-R>=expand("<cword>")<CR><CR>
+    nmap cst :cs find t <C-R>=expand("<cword>")<CR><CR>
+    nmap cse :cs find e <C-R>=expand("<cword>")<CR><CR>
+    nmap csf :cs find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap csi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap csd :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+    map <C-F11> :!cscope -b -k -q -R <CR>
+endif
 "}
