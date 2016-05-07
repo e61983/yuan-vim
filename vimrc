@@ -50,7 +50,7 @@ filetype plugin indent on    " required
 set title
 set number             " 顯示行號
 set cursorline         " 所在行高亮度
-set list lcs=tab:\|\   " 以 | 來顯示 Tab
+set listchars=eol:$,tab:>.,trail:~,extends:>,precedes:<
 syntax enable
 colorscheme desert
 let g:solarized_termcolors=256
