@@ -38,6 +38,8 @@ Plugin 'honza/vim-snippets'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'Yggdroot/indentLine'
 Plugin 'yegappan/grep'
+Plugin 'vim-scripts/DoxygenToolkit.vim'
+Plugin 'aceofall/gtags.vim'
 
 
 " All of your Plugins must be added before the following line
@@ -125,12 +127,12 @@ endif
 :inoremap ' ''<LEFT>
 :inoremap { {}<LEFT>
 :inoremap [ []<LEFT>
+:inoremap < <><LEFT>
 " }
 
 " Tags 設定
 set tags=tags;
 set autochdir
-map <C-F12> :!ctags -R --fields=+iaS --extra=+q * <CR>
 "}
 
 " Plugin Setting {
@@ -179,28 +181,48 @@ let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menuone,menu,longest,preview
 
-" cscope Setting{
-if(executable("cscope") && has("cscope") )
-    set csto=0
-    set cst
-    set nocsverb
-    if filereadable("cscope.out")
-        cs add cscope.out
-    elseif $CSCOPE_DB !=""
-        cs add $CSCOPE_DB
+" global Setting{
+set cscopetag
+set cscopeprg='gtags-cscope'
+let GtagsCscope_Auto_Load=1
+let GtagsCscope_Auto_Map=0
+let GtagsCscope_Quiet=1
+nmap css :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap csg :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap csc :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap cst :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap cse :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap csf :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap csi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap csd :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+map <C-F11> :global -i <CR>
+function! LoadDatabase()
+    let db = findfile("GTAGS", ".;")
+    if (!empty(db))
+        set nocscopeverbose
+        exe "cs add " . db
+        set cscopeverbose
     endif
-    set csverb
-    "set cscopequickfix=s-,c-,d-,i-,t-,e-
+endfunction
+function! UpdateGtags(f)
+    let dir = fnamemodify(a:f, ':p:h')
+    exe 'silent !cd ' . dir . ' && global -u &> /dev/null &'
+endfunction
+autocmd BufEnter *.[ch] call LoadDatabase()
+autocmd BufWritePost *.[ch] call UpdateGtags(expand('<afile>'))
+"}
 
-    nmap css :cs find s <C-R>=expand("<cword>")<CR><CR>
-    nmap csg :cs find g <C-R>=expand("<cword>")<CR><CR>
-    nmap csc :cs find c <C-R>=expand("<cword>")<CR><CR>
-    nmap cst :cs find t <C-R>=expand("<cword>")<CR><CR>
-    nmap cse :cs find e <C-R>=expand("<cword>")<CR><CR>
-    nmap csf :cs find f <C-R>=expand("<cfile>")<CR><CR>
-    nmap csi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-    nmap csd :cs find d <C-R>=expand("<cword>")<CR><CR>
-
-    map <C-F11> :!cscope -b -k -q -R <CR>
-endif
+" Doxygen{
+let g:DoxygenToolkit_briefTag_pre="@brief "
+let g:DoxygenToolkit_paramTag_pre="@param "
+let g:DoxygenToolkit_returnTag="@return "
+"let g:DoxygenToolkit_blockHeader="--------------------------------------------------------------------------"
+"let g:DoxygenToolkit_blockFooter="----------------------------------------------------------------------------"
+let g:DoxygenToolkit_authorName="Hua-Yuan"
+"let g:DoxygenToolkit_licenseTag="My own license"
+nmap df : Dox <CR>
+nmap db : DoxBlock <CR>
+nmap da : DoxAuthor <CR>
+nmap dl : DoxLic <CR>
 "}
