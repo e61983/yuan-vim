@@ -134,7 +134,7 @@ endif
 
 " Tags 設定
 set tags=tags;
-set autochdir
+"set autochdir
 "}
 
 " Plugin Setting {
