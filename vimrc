@@ -104,7 +104,7 @@ set softtabstop=4
 au FileType Makefile set noexpandtab
 nmap f : ClangFormat <CR>
 "auto remove tailing space
-autocmd BufWritePre * :%s/\s\+$//e
+"autocmd BufWritePre * :%s/\s\+$//e
 set listchars=trail:⎵
 " }
 
