@@ -40,6 +40,7 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'yegappan/grep'
 Plugin 'vim-scripts/DoxygenToolkit.vim'
 Plugin 'aceofall/gtags.vim'
+Plugin 'bronson/vim-trailing-whitespace'
 
 
 " All of your Plugins must be added before the following line
