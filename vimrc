@@ -37,11 +37,11 @@ Plugin 'honza/vim-snippets'
 " }
 Plugin 'airblade/vim-gitgutter'
 Plugin 'Yggdroot/indentLine'
-Plugin 'yegappan/grep'
 Plugin 'vim-scripts/DoxygenToolkit.vim'
 Plugin 'aceofall/gtags.vim'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'rhysd/vim-clang-format'
+Plugin 'mileszs/ack.vim'
 
 
 " All of your Plugins must be added before the following line
@@ -228,3 +228,5 @@ nmap db : DoxBlock <CR>
 nmap da : DoxAuthor <CR>
 nmap dl : DoxLic <CR>
 "}
+"
+let g:ackprg = 'ag --nogroup --nocolor --column'
