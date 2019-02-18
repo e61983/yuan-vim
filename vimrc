@@ -22,17 +22,17 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'Lokaltog/vim-powerline'
-Plugin 'vim-scripts/taglist.vim'
-Plugin 'vim-scripts/OmniCppComplete'
-Plugin 'vim-scripts/utl.vim'
+"Plugin 'vim-scripts/taglist.vim'
+"Plugin 'vim-scripts/utl.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 " Snippets {
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
+"Plugin 'MarcWeber/vim-addon-mw-utils'
+"Plugin 'tomtom/tlib_vim'
+"Plugin 'garbas/vim-snipmate'
 " Optional:
+Plugin 'sirver/ultisnips'
 Plugin 'honza/vim-snippets'
 " }
 Plugin 'airblade/vim-gitgutter'
