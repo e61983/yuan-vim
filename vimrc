@@ -42,6 +42,7 @@ Plugin 'aceofall/gtags.vim'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'mileszs/ack.vim'
+"Plugin 'valloric/youcompleteme'
 
 
 " All of your Plugins must be added before the following line
@@ -230,3 +231,5 @@ nmap dl : DoxLic <CR>
 "}
 "
 let g:ackprg = 'ag --nogroup --nocolor --column'
+let g:ycm_confirm_extra_conf = 0
+let g:UltiSnipsExpandTrigger="<c-j>"
