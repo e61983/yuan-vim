@@ -190,13 +190,22 @@ set cscopeprg='gtags-cscope'
 let GtagsCscope_Auto_Load=1
 let GtagsCscope_Auto_Map=0
 let GtagsCscope_Quiet=1
+
+"找出C語言name的符號"
 nmap css :cs find s <C-R>=expand("<cword>")<CR><CR>
+"找出name定義的地方"
 nmap csg :cs find g <C-R>=expand("<cword>")<CR><CR>
+"找出使用name的地方"
 nmap csc :cs find c <C-R>=expand("<cword>")<CR><CR>
+"找出name的字串"
 nmap cst :cs find t <C-R>=expand("<cword>")<CR><CR>
+"相當於egrep功能，但速度更佳"
 nmap cse :cs find e <C-R>=expand("<cword>")<CR><CR>
+"尋找檔案"
 nmap csf :cs find f <C-R>=expand("<cfile>")<CR><CR>
+"尋找include此檔案的檔案"
 nmap csi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+"尋找name裡面使用到的函式"
 nmap csd :cs find d <C-R>=expand("<cword>")<CR><CR>
 
 map <C-F11> :global -i <CR>
