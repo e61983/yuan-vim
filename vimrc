@@ -22,15 +22,15 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'Lokaltog/vim-powerline'
-"Plugin 'vim-scripts/taglist.vim'
-"Plugin 'vim-scripts/utl.vim'
+Plugin 'vim-scripts/taglist.vim'
+Plugin 'vim-scripts/utl.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 " Snippets {
-"Plugin 'MarcWeber/vim-addon-mw-utils'
-"Plugin 'tomtom/tlib_vim'
-"Plugin 'garbas/vim-snipmate'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
 " Optional:
 Plugin 'sirver/ultisnips'
 Plugin 'honza/vim-snippets'
@@ -42,7 +42,7 @@ Plugin 'aceofall/gtags.vim'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'mileszs/ack.vim'
-"Plugin 'valloric/youcompleteme'
+Plugin 'valloric/youcompleteme'
 
 
 " All of your Plugins must be added before the following line
@@ -64,6 +64,7 @@ let mapleader=","      " Leader key
 set history=1000       " 歷史記錄長度
 set ruler              " 顯示狀態例
 set autoread           " 文件被修改時自動重新載入
+
 
 filetype off
 syntax on              " 依據程式語法顯示不同顏色
@@ -111,7 +112,8 @@ set listchars=trail:⎵
 
 " C/C++ specific settings
 autocmd FileType c,cpp,cc  set cindent comments=sr:/*,mb:*,el:*/,:// cino=>s,e0,n0,f0,{0,}0,^-1s,:0,=s,g0,h1s,p2,t0,+2,(2,)20,*30
-
+au FileType c,cpp,cc set textwidth=80
+au FileType c,cpp,cc set colorcolumn=81
 " }
 
 " 編碼設定 {
