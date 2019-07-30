@@ -1,0 +1,22 @@
+[alias]
+	co = checkout
+	ci = commit
+	st = status
+	sts = status -s
+	br = branch
+	re = remote
+	di = diff
+	type = cat-file -t
+	dump = cat-file -p
+	lo = log --oneline
+	ll = log --pretty=format:'%h %ad | %s%d [%Cgreen%an%Creset]' --graph --date=short
+	lg = log --graph --pretty=format:'%Cred%h%Creset %ad |%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset [%Cgreen%an%Creset]' --abbrev-commit --date=short
+    cp = cherry-pick
+    cleanup = !git remote prune origin && git branch --merged | egrep -v '(^\\*|master|develop)' | xargs git branch -d
+[user]
+	name = Yuan
+	email = e61983@gmail.com
+[merge]
+	tool = vimdiff
+[core]
+	editor = vim
