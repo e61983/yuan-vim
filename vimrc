@@ -36,7 +36,7 @@ Plugin 'sirver/ultisnips'
 Plugin 'honza/vim-snippets'
 " }
 Plugin 'airblade/vim-gitgutter'
-Plugin 'Yggdroot/indentLine'
+Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'vim-scripts/DoxygenToolkit.vim'
 Plugin 'aceofall/gtags.vim'
 Plugin 'bronson/vim-trailing-whitespace'
@@ -169,8 +169,10 @@ let g:syntastic_check_on_wq = 0
 " Snipmate Setting {
 "}
 
-" indentLine Setting {
-let g:indentLine_color_term = 239
+"vim-indent-guides Setting {
+let g:indent_guides_enable_on_vim_startup = 1
+hi IndentGuidesOdd  ctermbg=white
+hi IndentGuidesEven ctermbg=lightgrey
 " }
 
 " OmniCppComplete
