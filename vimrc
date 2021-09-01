@@ -167,6 +167,7 @@ let g:syntastic_check_on_wq = 0
 " }
 
 " Snipmate Setting {
+let g:snipMate = { 'snippet_version' : 1 }
 "}
 
 "vim-indent-guides Setting {
