@@ -1,2 +1,5 @@
 [include]
 	path = yuan-vim/my_config
+
+[init]
+	defaultBranch = master

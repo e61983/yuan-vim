@@ -1,249 +1,129 @@
 set nocompatible              " be iMproved, required
-filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-set shell=/bin/bash
-
-" http://www.erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/
-" Setting up Vundle - the vim plugin bundler
-let iCanHazVundle=1
-let vundle_readme=expand('~/.vim/bundle/Vundle.vim/README.md')
-if !filereadable(vundle_readme)
-    echo "Installing Vundle.."
+let iCanHazVimPlug=1
+let plug_vim=expand('~/.vim/autoload/plug.vim')
+if !filereadable(plug_vim)
+    echo "Installing vim-plug.."
     echo ""
-    silent !mkdir -p ~/.vim/bundle
-    silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/Vundle.vim
-    let iCanHazVundle=0
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    let iCanHazVimPlug=0
 endif
 
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'Lokaltog/vim-powerline'
-Plugin 'vim-scripts/taglist.vim'
-Plugin 'vim-scripts/utl.vim'
-Plugin 'scrooloose/syntastic'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
-" Snippets {
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-" Optional:
-Plugin 'sirver/ultisnips'
-Plugin 'honza/vim-snippets'
-" }
-Plugin 'airblade/vim-gitgutter'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'vim-scripts/DoxygenToolkit.vim'
-Plugin 'aceofall/gtags.vim'
-Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'rhysd/vim-clang-format'
-Plugin 'mileszs/ack.vim'
-Plugin 'valloric/youcompleteme'
+" common
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-surround'
+Plug 'kien/ctrlp.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+"for web development
+Plug 'mattn/emmet-vim'
+Plug 'othree/html5.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'posva/vim-vue'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+"for go development
+Plug 'fatih/vim-go'
+Plug 'nsf/gocode'
 
-" 顏色配置 {
-set title
-set number             " 顯示行號
-set cursorline         " 所在行高亮度
-set listchars=eol:$,tab:>.,trail:~,extends:>,precedes:<
-syntax enable
-colorscheme desert
-let g:solarized_termcolors=256
-" }
+" All of your Plugs must be added before the following line
+call plug#end()            " required
 
-" 一般設定
-let mapleader=","      " Leader key
-set history=1000       " 歷史記錄長度
-set ruler              " 顯示狀態例
-set autoread           " 文件被修改時自動重新載入
+filetype plugin on
+filetype indent on
+
+let mapleader = ','
 
 
-filetype off
-syntax on              " 依據程式語法顯示不同顏色
-filetype on            " 文件類型支持
-filetype indent on     " 文件類型縮排支持
-filetype plugin on     " 文件類型外掛支持
+set history=1000
+set autoread
+set ruler
+set rnu
 
-set hlsearch           " 搜尋時高亮度顯示
-set backspace=2        " 使 backspace key 正常長處理indent
-set clipboard=unnamed  " 與windows共享剪貼板
-set showmatch          " 顯示對應的括號
-set wildchar=<TAB>
+set textwidth=79
+set colorcolumn=80
+set wrap
+set linebreak
+
+set noerrorbells
+set novisualbell
+
+set cursorline
+set showmatch
+set hlsearch
+
+set list
+set listchars=tab:▹\ ,trail:▵
+
+" pum: PopUp Menu, the menu by <C-N> in insert mode
+set pumheight=16
+
+" keep space from top and bottom
+set scrolloff=2
+
 set wildmenu
-set wildignore=*.o,*.class,*.pyc
+set wildignore=*.o,*~,*.pyc
 
-set incsearch          " 即時搜尋
-set nobackup           " 不要產生備份檔
-set ignorecase         " 搜尋時乎略大小寫
+syntax on
+set t_Co=256
+silent! color luthadel
+
+" don't redraw while executing macros (good performance config)
+set lazyredraw
+
+" gt: next tab
+" gT: previous tab
+set tabpagemax=100
+noremap <Leader>t :tabedit <C-R>=expand('%:p:h')<CR>/
+" ,1 ,2 ,3: go specific tab
+for i in range(1, 9)
+    exec 'noremap <Leader>'.i.' '.i.'gt'
+endfor
+
+" ,v: split vertically
+" ,h: split horizontally
+set splitright
+noremap <silent> <Leader>v :vsplit<CR>
+noremap <silent> <Leader>h :split<CR>
+
+
+set incsearch
+" use /\C to overrule it
+set ignorecase
+" be case-sensitive when contains upper char
 set smartcase
+
+set autoindent
+
+set shiftwidth=4
+set tabstop=4
+set expandtab
 set smarttab
 
-set noerrorbells       " 關閉錯誤提示音
-set novisualbell       " 不閃爍
-set tm=500
+" don't backup
+set nobackup
+set nowb
+set noswapfile
 
-" 摺疊設置 {
-set foldmethod=syntax  " 用語法高亮來定義摺疊
-set foldlevel=100      " 啟動vim時不要自動摺疊代碼
-" }
-
-" TAB 縮排設定{
-set smartindent
-set autoindent         " 自動縮排
-set cindent
-set expandtab
-set tabstop=4          " Tab 寬度
-set shiftwidth=4       " 縮排字元數
-set softtabstop=4
-au FileType Makefile set noexpandtab
-nmap f : ClangFormat <CR>
-"auto remove tailing space
-"autocmd BufWritePre * :%s/\s\+$//e
-set listchars=trail:⎵
-" }
-
-" C/C++ specific settings
-autocmd FileType c,cpp,cc  set cindent comments=sr:/*,mb:*,el:*/,:// cino=>s,e0,n0,f0,{0,}0,^-1s,:0,=s,g0,h1s,p2,t0,+2,(2,)20,*30
-au FileType c,cpp,cc set textwidth=80
-au FileType c,cpp,cc set colorcolumn=81
-" }
-
-" 編碼設定 {
 set encoding=utf-8
-set termencoding=utf-8
-set fileencoding=utf-8
-set fileencodings=ucs-bom,utf-8,big5,gb2312,latin1
-if &term =~ 'screen'
-    set t_Co=256
-endif
-" }
 
-" 自動括號補齊 {
-:inoremap ( ()<LEFT>
-:inoremap " ""<LEFT>
-:inoremap ' ''<LEFT>
-:inoremap { {}<LEFT>
-:inoremap [ []<LEFT>
-:inoremap < <><LEFT>
-" }
+autocmd FileType html
+    \ noremap <Leader>i1 i<!DOCTYPE html><CR><html lang="en"><CR><head><CR><meta charset="UTF-8"><CR><title></title><CR></head><CR><body><CR><CR></body><CR></html>
 
-" Tags 設定
-set tags=tags;
-"set autochdir
-"}
+let g:coc_confing_home = '~/yuan-vim/coc-settings.json'
+let g:coc_global_extensions = ['coc-json', 'coc-html', 'coc-go', 'coc-css', 'coc-clangd','coc-tailwindcss','coc-prettier', 'coc-sh' ]
 
-" Plugin Setting {
-
-" PowerLine {
-let g:Powerline_symbols = 'unicode'
-set laststatus=2
-" }
-
-" NERDTree {
 map <F3> :NERDTreeToggle<CR>
 let g:NERDTreeWinPos="right"
-" }
 
-" taglist {
-map <F4> :TlistToggle<CR>
-" }
+" "[registers]yy
 
-" Syntastic Setting {
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-" }
-
-" Snipmate Setting {
-let g:snipMate = { 'snippet_version' : 1 }
-"}
-
-"vim-indent-guides Setting {
-let g:indent_guides_enable_on_vim_startup = 1
-hi IndentGuidesOdd  ctermbg=white
-hi IndentGuidesEven ctermbg=lightgrey
-" }
-
-" OmniCppComplete
-let OmniCpp_NamespaceSearch = 1
-let OmniCpp_GlobalScopeSearch = 1
-let OmniCpp_ShowAccess = 1
-let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
-let OmniCpp_MayCompleteDot = 1 " autocomplete after .
-let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
-let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
-let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-" automatically open and close the popup menu / preview window
-au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-set completeopt=menuone,menu,longest,preview
-
-" global Setting{
-set cscopetag
-set cscopeprg='gtags-cscope'
-let GtagsCscope_Auto_Load=1
-let GtagsCscope_Auto_Map=0
-let GtagsCscope_Quiet=1
-
-"找出C語言name的符號"
-nmap css :cs find s <C-R>=expand("<cword>")<CR><CR>
-"找出name定義的地方"
-nmap csg :cs find g <C-R>=expand("<cword>")<CR><CR>
-"找出使用name的地方"
-nmap csc :cs find c <C-R>=expand("<cword>")<CR><CR>
-"找出name的字串"
-nmap cst :cs find t <C-R>=expand("<cword>")<CR><CR>
-"相當於egrep功能，但速度更佳"
-nmap cse :cs find e <C-R>=expand("<cword>")<CR><CR>
-"尋找檔案"
-nmap csf :cs find f <C-R>=expand("<cfile>")<CR><CR>
-"尋找include此檔案的檔案"
-nmap csi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-"尋找name裡面使用到的函式"
-nmap csd :cs find d <C-R>=expand("<cword>")<CR><CR>
-
-map <C-F11> :global -i <CR>
-function! LoadDatabase()
-    let db = findfile("GTAGS", ".;")
-    if (!empty(db))
-        set nocscopeverbose
-        exe "cs add " . db
-        set cscopeverbose
-    endif
-endfunction
-function! UpdateGtags(f)
-    let dir = fnamemodify(a:f, ':p:h')
-    exe 'silent !cd ' . dir . ' && global -u &> /dev/null &'
-endfunction
-autocmd BufEnter *.[ch] call LoadDatabase()
-autocmd BufWritePost *.[ch] call UpdateGtags(expand('<afile>'))
-"}
-
-" Doxygen{
-let g:DoxygenToolkit_briefTag_pre="@brief "
-let g:DoxygenToolkit_paramTag_pre="@param "
-let g:DoxygenToolkit_returnTag="@return "
-"let g:DoxygenToolkit_blockHeader="--------------------------------------------------------------------------"
-"let g:DoxygenToolkit_blockFooter="----------------------------------------------------------------------------"
-let g:DoxygenToolkit_authorName="Hua-Yuan"
-"let g:DoxygenToolkit_licenseTag="My own license"
-nmap df : Dox <CR>
-nmap db : DoxBlock <CR>
-nmap da : DoxAuthor <CR>
-nmap dl : DoxLic <CR>
-"}
+"<C-U> / <C-D>	Half-page up/down
+"<C-B> / <C-F>	Page up/down
+"<C-e> / <C-y>	Move screen up/down
 "
-let g:ackprg = 'ag --nogroup --nocolor --column'
-let g:ycm_confirm_extra_conf = 0
-let g:UltiSnipsExpandTrigger="<c-j>"
+"zt zz zb Scrolls to top/middle/bottom
