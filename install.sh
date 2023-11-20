@@ -1,7 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-ln -sf yuan-vim/vimrc ../.vimrc
-ln -sf yuan-vim/coc-settings.json ../.vim/coc-settings.json
-ln -sf yuan-vim/gitconfig ../.gitconfig
+ln -vsf ~/yuan-vim/gitconfig ~/.gitconfig
+ln -vsf ~/yuan-vim/nvim ~/.config/nvim
 
 echo "Install Success !"
