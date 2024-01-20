@@ -1,0 +1,52 @@
+function gen_makefile () {
+  cat << \EOF > Makefile
+TARGET := app
+OUTDIR ?= out
+VERSION = 1.0.0
+
+COMMIT = $(shell git rev-parse --short HEAD)
+SRC := $(shell find . -type f -name "*.go")
+
+GO ?= go
+LDFLAGS = -X 'main.VERSION=$(VERSION)'
+LDFLAGS += -X 'main.COMMIT=$(COMMIT)'
+
+BUILD_ARG = -a -ldflags '-s -w $(EXTLDFLAGS) $(LDFLAGS)' -tags=jsoniter
+
+all: run
+
+build: \
+	$(OUTDIR)/silicon/$(TARGET) \
+	$(OUTDIR)/intel/$(TARGET)
+
+release: $(VERSION)
+
+$(OUTDIR):
+	@mkdir -p $@
+
+$(OUTDIR)/silicon/$(TARGET): $(SRC) | $(OUTDIR)
+	@echo [BUILD] $@
+	@CGO_ENABLED=0 GOOS=darwin GOARCH=arm64 GOARM=7 $(GO) build $(BUILD_ARG) -o $@
+
+$(OUTDIR)/intel/$(TARGET): $(SRC) | $(OUTDIR)
+	@echo [BUILD] $@
+	@CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 $(GO) build $(BUILD_ARG) -o $@
+
+$(VERSION): build
+	@mkdir -p $@/{silicon,intel}
+	@upx -qq $(OUTDIR)/silicon/$(TARGET) -o $@/silicon/$(TARGET)
+	@upx -qq $(OUTDIR)/intel/$(TARGET) -o $@/intel/$(TARGET)
+	-@cp config.yaml.example $@/config.yaml
+	@echo [ZIP]
+	@zip -r $@.zip $@
+
+.PHONY: clean
+clean:
+	@echo [CLEAN]
+	@$(RM) -r $(OUTDIR) $(VERSION)
+
+.PHONY: run
+run:
+	$(GO) run $(BUILD_ARG) .
+EOF
+}
