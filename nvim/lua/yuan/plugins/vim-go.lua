@@ -12,3 +12,4 @@ return {
     vim.g.go_highlight_build_constraints = true
   end
 }
+

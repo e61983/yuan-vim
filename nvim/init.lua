@@ -1,2 +1,2 @@
-require("config/default")
-require("config/lazy")
+require("yuan.core")
+require("yuan.lazy")
