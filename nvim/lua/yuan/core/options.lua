@@ -7,7 +7,7 @@ opt.relativenumber = true -- show relative line numbers
 opt.number = true -- shows absolute line number on cursor line (when relative number is on)
 opt.ruler = true -- show the line and column number of the cursor position
 opt.colorcolumn = "80" -- highlight column 80
-opt.textwidth = 80 -- set text width to 80
+--opt.textwidth = 80 -- set text width to 80
 
 -- tabs & indentation
 opt.tabstop = 4 -- number of spaces that a <Tab> in the file counts for
