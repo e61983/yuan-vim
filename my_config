@@ -12,8 +12,21 @@
 	ll = log --pretty=format:'%h %ad | %s%d [%Cgreen%an%Creset]' --graph --date=short
 	lg = log --graph --pretty=format:'%Cred%h%Creset %ad |%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset [%Cgreen%an%Creset]' --abbrev-commit --date=short
     cp = cherry-pick
+
     cleanup = !git remote prune origin && git branch --merged | egrep -v '(^\\*|master|develop)' | xargs git branch -d
-[merge]
+
+    start-feature = "!git flow feature start"
+    start-bugfix = "!git flow bugfix start"
+    start-hotfix = "!git flow hotfix start"
+    start-release = "!git flow release start"
+
+    finish-feature = "!git flow feature finish `git symbolic-ref --short HEAD | sed 's/^feature\\///'`"
+    finish-bugfix = "!git flow bugfix finish `git symbolic-ref --short HEAD | sed 's/^bugfix\\///'`"
+    finish-hotfix = "!git flow hotfix finish `git symbolic-ref --short HEAD | sed 's/^hotfix\\///'`"
+    finish-release = "!git flow release finish `git symbolic-ref --short HEAD | sed 's/^release\\///'`"
+
+    publish = "!git push origin `git symbolic-ref --short HEAD` && echo Publishing"[merge]
+
 	tool = vimdiff
 [core]
 	editor = vim
