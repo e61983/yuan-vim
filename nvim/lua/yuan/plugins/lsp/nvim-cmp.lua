@@ -4,7 +4,6 @@ return {
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		"hrsh7th/cmp-cmdline",
-		"hrsh7th/nvim-cmp",
 		"hrsh7th/cmp-vsnip",
 		"hrsh7th/vim-vsnip",
 		"hrsh7th/cmp-buffer", -- source for text in buffer
@@ -17,7 +16,7 @@ return {
 			build = "make install_jsregexp",
 		},
 		"saadparwaiz1/cmp_luasnip", -- for autocompletion
-		"rafamadriz/friendly-snippets", -- useful snippets "onsails/lspkind.nvim", -- vs-code like pictograms
+		"rafamadriz/friendly-snippets", -- useful snippets
 		"onsails/lspkind.nvim", -- vs-code like pictograms
 	},
 	config = function()
@@ -32,11 +31,12 @@ return {
 			local line, col = unpack(vim.api.nvim_win_get_cursor(0))
 			return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
 		end
+
 		cmp.setup({
 			completion = {
 				completeopt = "menu,menuone,preview,noinsert,noselect",
 			},
-				preselect = cmp.PreselectMode.Item,
+			preselect = cmp.PreselectMode.Item,
 			mapping = cmp.mapping.preset.insert({
 				["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
 				["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
@@ -64,35 +64,11 @@ return {
 				{ name = "nvim_lsp", group_index = 2 },
 				{ name = "path", group_index = 2 },
 				{ name = "luasnip", group_index = 2 },
-				{ name = "vsnip" }, -- For vsnip users.
+				{ name = "vsnip" },
 			}, {
 				{ name = "buffer" },
 			}),
-
-			-- use cmp-buffer source for gitcommit filetype
-			cmp.setup.filetype("gitcommit", {
-				sources = {
-					{ name = "buffer" },
-				},
-			}),
-
-			-- use cmp-buffer source for cmdline
-			cmp.setup.cmdline("/", {
-				mapping = cmp.mapping.preset.cmdline(),
-				sources = {
-					{ name = "buffer" },
-				},
-			}),
-
-			cmp.setup.cmdline(":", {
-				mapping = cmp.mapping.preset.cmdline(),
-				sources = {
-					{ name = "path" },
-					{ name = "cmdline" },
-				},
-			}),
-
-			FormattingConfig = {
+			formatting = {
 				format = lspkind.cmp_format({
 					with_text = true,
 					maxwidth = 50,
@@ -101,6 +77,27 @@ return {
 						return vim_item
 					end,
 				}),
+			},
+		})
+
+		cmp.setup.filetype("gitcommit", {
+			sources = {
+				{ name = "buffer" },
+			},
+		})
+
+		cmp.setup.cmdline("/", {
+			mapping = cmp.mapping.preset.cmdline(),
+			sources = {
+				{ name = "buffer" },
+			},
+		})
+
+		cmp.setup.cmdline(":", {
+			mapping = cmp.mapping.preset.cmdline(),
+			sources = {
+				{ name = "path" },
+				{ name = "cmdline" },
 			},
 		})
 	end,
