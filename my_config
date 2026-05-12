@@ -31,6 +31,8 @@
 [core]
 	editor = vim
 
+[diff]
+    external = difft
 [color]
   diff = auto
   status = auto

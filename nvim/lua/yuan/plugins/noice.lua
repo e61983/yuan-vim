@@ -10,10 +10,26 @@ return {
         "rcarriga/nvim-notify",
     },
     config = function()
-        require("notify").setup({
-                level = "info",
-                stages = "fade",
-                top_down = false,
+        require("notify").setup( {
+            background_colour = "NotifyBackground",
+            fps = 30,
+            icons = {
+                DEBUG = "",
+                ERROR = "",
+                INFO = "",
+                TRACE = "✎",
+                WARN = ""
+            },
+            level = 2, -- info
+            minimum_width = 50,
+            render = "minimal",
+            stages = "fade",
+            time_formats = {
+                notification = "%T",
+                notification_history = "%FT%T"
+            },
+            timeout = 1000,
+            top_down = false
         })
         require("noice").setup({
             messages = {
@@ -21,6 +37,6 @@ return {
                 view_error = "notify",
                 view_warn = "notify",
             },
-    })
-    end,
+        })
+        end,
 }

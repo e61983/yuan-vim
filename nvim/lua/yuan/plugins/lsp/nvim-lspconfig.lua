@@ -3,14 +3,12 @@ return {
 	ft = "go",
 	event = { "BufReadPre", "BufNewFile" },
 	config = function()
-		local lspconfig = require("lspconfig")
-
 		local capabilities = require("cmp_nvim_lsp").default_capabilities()
-		lspconfig.gopls.setup({
+		vim.lsp.config("gopls", {
 			cmd = { "gopls", "serve" },
 			capabilities = capabilities,
 			filetypes = { "go", "gomod", "gotmpl" },
-			root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git"),
+			root_markers = { "go.work", "go.mod", ".git" },
 			settings = {
 				gopls = {
 					analyses = {
@@ -23,5 +21,6 @@ return {
 				},
 			},
 		})
+		vim.lsp.enable("gopls")
 	end,
 }

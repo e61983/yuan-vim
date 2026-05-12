@@ -16,6 +16,11 @@ return {
             lsp_cfg = {
               capabilities = capabilities,
             },
+            lsp_inlay_hints = {
+                -- only_current_line = true,
+                -- only_current_line_autocmd = "CursorHold",
+                show_variable_name = true,
+            },
 		})
 
 		vim.keymap.set("n", "<leader>b", "<cmd>GoDebug -b<CR>")

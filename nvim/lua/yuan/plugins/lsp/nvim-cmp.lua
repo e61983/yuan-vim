@@ -1,9 +1,6 @@
 return {
 	"hrsh7th/nvim-cmp",
 	event = "InsertEnter",
-	requires = {
-		"zbirenbaum/copilot-cmp",
-	},
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		"hrsh7th/cmp-cmdline",
@@ -27,12 +24,6 @@ return {
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
 		local lspkind = require("lspkind")
-		lspkind.init({
-			symbol_map = {
-				Copilot = "",
-			},
-		})
-		vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
 
 		local has_words_before = function()
 			if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
@@ -70,7 +61,6 @@ return {
 				end),
 			}),
 			sources = cmp.config.sources({
-				{ name = "copilot", group_index = 2 },
 				{ name = "nvim_lsp", group_index = 2 },
 				{ name = "path", group_index = 2 },
 				{ name = "luasnip", group_index = 2 },
