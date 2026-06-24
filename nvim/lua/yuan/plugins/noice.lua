@@ -23,13 +23,15 @@ return {
             level = 2, -- info
             minimum_width = 50,
             render = "minimal",
-            stages = "fade",
+            -- "static"：避免動畫逐幀 nvim__redraw{flush=true} 在 0.12 async treesitter
+            -- 解析中 re-enter highlighter 而崩潰（想要淡入淡出可改回 "fade"）。
+            stages = "static",
             time_formats = {
                 notification = "%T",
                 notification_history = "%FT%T"
             },
             timeout = 1000,
-            top_down = false
+            top_down = false,
         })
         require("noice").setup({
             messages = {
