@@ -8,9 +8,10 @@ return {
 		"ray-x/guihua.lua",
 		"neovim/nvim-lspconfig",
 		"nvim-treesitter/nvim-treesitter",
+		"saghen/blink.cmp",
 	},
 	config = function()
-        local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+        local capabilities = require('blink.cmp').get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
 		require("go").setup({
 			icons = { breakpoint = "B", currentpos = "→" },
             lsp_cfg = {

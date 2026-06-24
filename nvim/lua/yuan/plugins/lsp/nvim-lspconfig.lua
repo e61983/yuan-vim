@@ -2,8 +2,9 @@ return {
 	"neovim/nvim-lspconfig",
 	ft = "go",
 	event = { "BufReadPre", "BufNewFile" },
+	dependencies = { "saghen/blink.cmp" },
 	config = function()
-		local capabilities = require("cmp_nvim_lsp").default_capabilities()
+		local capabilities = require("blink.cmp").get_lsp_capabilities()
 		vim.lsp.config("gopls", {
 			cmd = { "gopls", "serve" },
 			capabilities = capabilities,
